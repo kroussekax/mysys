@@ -185,14 +185,6 @@
 
 			vulkan-tools
 
-			gcc
-			clang
-			gnumake42
-			lua
-			luajit
-			go
-			unzip
-			python315
 			os-prober
 
 			xdg-desktop-portal-hyprland
