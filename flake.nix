@@ -6,6 +6,7 @@
 		nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
 		iio-hyprland.url = "github:JeanSchoeller/iio-hyprland";
+		hyprland.url = "github:hyprwm/Hyprland";
 	};
 
 	outputs = { self, nixpkgs, ... } @ inputs:

@@ -12,25 +12,24 @@
 	boot = {
 		loader = {
 			efi.canTouchEfiVariables = true;
-			grub = { 
+			grub = {
 				enable = true;
 				device = "nodev";
 				useOSProber = true;
 				efiSupport = true;
-				theme = pkgs.stdenv.mkDerivation {
-					name = "minegrub";
-					src = pkgs.fetchFromGitHub {
-						owner = "Lxtharia";
-						repo = "minegrub-theme";
-						rev = "main";
-						sha256 = "1lv9wsam2lccidyyr4alm7d10jycsgi26bgijxnjdzjci8041y8s";
-					};
-					installPhase = "cp -r minegrub $out";
-				};
 			};
 		};
 		kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
 	};
+
+	security.polkit.extraConfig = ''
+		polkit.addRule(function(action, subject) {
+				if (action.id == "org.freedesktop.systemd1.soft-reboot" &&
+						subject.isInGroup("wheel")) {
+				return polkit.Result.YES;
+				}
+				});
+	'';
 
 	networking = {
 		hostName = "est";
@@ -38,12 +37,16 @@
 		firewall = {
 			allowedTCPPorts = [
 				3000
-					53317
-					8191
+				53317
+				8191
+				19132
+				3312
 			];
 			allowedUDPPorts = [
 				53317
-					8191
+				8191
+				19132
+				3312
 			];
 		};
 		nameservers = [
@@ -57,12 +60,21 @@
 
 	nix.settings.experimental-features = ["nix-command" "flakes"];
 
-	boot.kernelModules = [
-		"industrialio"
+	boot = {
+		kernelModules = [
+			"industrialio"
 			"industrialio_triggered_buffer"
 			"kxcjk1013"
 			"bmi160"
-	];
+			"v4l2loopback"
+		];
+
+		extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
+
+		extraModprobeConfig = ''
+			options v4l2loopback devices=1 video_nr=10 card_label="Virtual Camera" exclusive_caps=1
+			'';
+	};
 
 	services = {
 		udev.extraRules = ''
@@ -71,7 +83,8 @@
 
 		udev.packages = with pkgs; [
 			platformio-core.udev
-				pkgs.iio-sensor-proxy
+			iio-sensor-proxy
+			yubikey-personalization
 		];
 
 		xserver.enable = true;
@@ -112,12 +125,14 @@
 		blueman.enable = true;
 		flatpak.enable = true;
 
+
 		gnome.gnome-keyring.enable = true;
 	};
 
 	security = {
 		pam.services.login.enableGnomeKeyring = true;
 		pam.services.gdm.enableGnomeKeyring = true;
+		pam.u2f.enable = true;
 		rtkit.enable = true;
 		polkit.enable = true;
 	};
@@ -150,7 +165,7 @@
 		isNormalUser = true;
 		shell = pkgs.zsh;
 		description = "kax";
-		extraGroups = [ "networkmanager" "wheel" ];
+		extraGroups = [ "networkmanager" "wheel" "dialout" "docker"];
 		packages = with pkgs; [
 		];
 	};
@@ -159,8 +174,14 @@
 	programs = {
 		zsh.enable = true;
 		firefox.enable = true;
-		hyprland.enable = true;
 		nix-ld.enable = true;
+		seahorse.enable = true;
+		hyprland = {
+			enable = true;
+
+			package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+			portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+		};
 	};
 
 	environment.variables = {
@@ -169,7 +190,9 @@
 	};
 
 	xdg.portal.enable = true;
-	xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+
+	virtualisation.docker.enable = true;
+	virtualisation.waydroid.enable = true;
 
 	nixpkgs.config.allowUnfree = true;
 	environment.systemPackages = with pkgs; [
@@ -186,10 +209,7 @@
 			vulkan-tools
 
 			os-prober
-
-			xdg-desktop-portal-hyprland
 			xdg-desktop-portal-gtk
-			hyprpicker
 			inotify-tools
 			app2unit
 			wireplumber
