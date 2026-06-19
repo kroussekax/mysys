@@ -7,6 +7,7 @@
 
 		iio-hyprland.url = "github:JeanSchoeller/iio-hyprland";
 		hyprland.url = "github:hyprwm/Hyprland";
+		pixie-sddm.url = "github:xCaptaiN09/pixie-sddm";
 	};
 
 	outputs = { self, nixpkgs, ... } @ inputs:

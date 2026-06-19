@@ -91,8 +91,16 @@
 
 		displayManager.sddm = {
 			enable = true;
+			theme = "pixie";
+			wayland.enable = true;
 
-			theme = "catppuccin-mocha-mauve";
+			package = pkgs.kdePackages.sddm;
+
+			extraPackages = [
+				pkgs.kdePackages.qtsvg
+				pkgs.kdePackages.qtdeclarative
+				pkgs.kdePackages.qt5compat
+			];
 		};
 
 		xserver.xkb = {
@@ -125,8 +133,9 @@
 		blueman.enable = true;
 		flatpak.enable = true;
 
-
 		gnome.gnome-keyring.enable = true;
+
+		tailscale.enable = true;
 	};
 
 	security = {
@@ -135,6 +144,7 @@
 		pam.u2f.enable = true;
 		rtkit.enable = true;
 		polkit.enable = true;
+		unprivilegedUsernsClone = true;
 	};
 
 	hardware = {
@@ -170,7 +180,6 @@
 		];
 	};
 
-
 	programs = {
 		zsh.enable = true;
 		firefox.enable = true;
@@ -197,33 +206,49 @@
 	nixpkgs.config.allowUnfree = true;
 	environment.systemPackages = with pkgs; [
 		home-manager
-			efibootmgr
+		efibootmgr
 
-			inputs.iio-hyprland.packages.${pkgs.system}.default
+		inputs.iio-hyprland.packages.${pkgs.system}.default
 
-			bibata-cursors
+		bibata-cursors
 
-			flatpak
-			catppuccin-sddm
+		flatpak
+		(catppuccin-sddm.override {
+		 flavor = "mocha";
+		 accent = "mauve";
+		 background = "${../wallpaper.png}";
+		 loginBackground = true;
+		})
 
-			vulkan-tools
+		(inputs.pixie-sddm.packages.${pkgs.stdenv.hostPlatform.system}.pixie-sddm.override {
+		 background = "${../wallpaper.png}";
+		 avatar = ../avatar.jpeg;       
+		 primaryColor = "#B3C8FF";      
+		 accentColor = "#3F5F91";      
+		 autoColor = true;            
+		 backgroundColor = "#1A1C1E";      
+		 textColor = "#E2E2E6";           
+		 fontFamily = "JetBrains Mono";  
+		 fontSize = 13;                 
+		})
 
-			os-prober
-			xdg-desktop-portal-gtk
-			inotify-tools
-			app2unit
-			wireplumber
-			trash-cli
-			starship
-			btop
-			htop
-			jq
-			eza
-			papirus-icon-theme
-			kdePackages.qt5compat
-			nerd-fonts.jetbrains-mono
-			];
+		vulkan-tools
 
-	system.stateVersion = "25.11";
+		os-prober
+		xdg-desktop-portal-gtk
+		inotify-tools
+		app2unit
+		wireplumber
+		trash-cli
+		starship
+		btop
+		htop
+		jq
+		eza
+		papirus-icon-theme
+		kdePackages.qt5compat
+		nerd-fonts.jetbrains-mono
+		];
 
+		system.stateVersion = "25.11";
 }

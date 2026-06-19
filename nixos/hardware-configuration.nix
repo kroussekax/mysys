@@ -4,28 +4,41 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+	imports =[
+		(modulesPath + "/installer/scan/not-detected.nix")
+	];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+	boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
+	boot.initrd.kernelModules = [ ];
+	boot.kernelModules = [ "kvm-amd" ];
+	boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/2f270707-cf0c-46a5-b174-f7fb7f94bbae";
-      fsType = "ext4";
-    };
+	fileSystems."/" = {
+		device = "/dev/disk/by-uuid/e47503d3-7800-47c5-8339-da2008570299";
+		fsType = "ext4";
+	};
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/A88C-74E6";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
+	fileSystems."/boot" = {
+		device = "/dev/disk/by-uuid/87EE-2450";
+		fsType = "vfat";
+		options = [ "fmask=0077" "dmask=0077" ];
+	};
 
-  swapDevices = [ ];
+	fileSystems."/home/kax/Windows" = {
+		device = "/dev/disk/by-uuid/8E18C57B18C56337";
+		fsType = "ntfs3";
+		options = [
+			"rw"
+			"uid=1000"
+			"gid=100"
+			"umask=022"
+			"windows_names"
+			"nofail"
+		];
+	};
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+	swapDevices = [ ];
+
+	nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+	hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
