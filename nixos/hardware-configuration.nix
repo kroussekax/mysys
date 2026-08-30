@@ -26,7 +26,7 @@
 
 	fileSystems."/home/kax/Windows" = {
 		device = "/dev/disk/by-uuid/8E18C57B18C56337";
-		fsType = "ntfs3";
+		fsType = "ntfs";
 		options = [
 			"rw"
 			"uid=1000"
