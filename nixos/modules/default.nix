@@ -8,5 +8,6 @@
 		./users.nix
 		./hyprland.nix
 		./environment.nix
+		./apps.nix
 	];
 }

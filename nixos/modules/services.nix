@@ -1,4 +1,4 @@
-{ config, ...}:
+{ config, pkgs, ...}:
 {
 	services = {
 		udev.extraRules = ''
@@ -13,9 +13,7 @@
 
 		xserver.enable = true;
 
-		desktopManager.gnome = {
-			enable = true;
-		};
+		flatpak.enable = true;
 
 		displayManager.sddm = {
 			enable = true;
@@ -66,5 +64,4 @@
 		power-profiles-daemon.enable = false;
 		fwupd.enable = true;
 	};
-
-d}
+}
