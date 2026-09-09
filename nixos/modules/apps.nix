@@ -1,3 +1,4 @@
+{ pkgs, inputs, ...}:
 {
 	environment.systemPackages = with pkgs; [
 		home-manager
@@ -12,13 +13,13 @@
 		(catppuccin-sddm.override {
 		 flavor = "mocha";
 		 accent = "mauve";
-		 background = "${../wallpaper.png}";
+		 background = "${../../wallpaper.png}";
 		 loginBackground = true;
 		})
 
 		(inputs.pixie-sddm.packages.${pkgs.stdenv.hostPlatform.system}.pixie-sddm.override {
 		 background = "${../wallpaper.png}";
-		 avatar = ../avatar.jpeg;       
+		 avatar = ../../avatar.jpeg;       
 		 primaryColor = "#B3C8FF";      
 		 accentColor = "#3F5F91";      
 		 autoColor = true;            
