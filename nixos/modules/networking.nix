@@ -1,4 +1,4 @@
-{config, ...}:
+{ ... }:
 {
 	networking = {
 		hostName = "est";
@@ -16,6 +16,7 @@
 				8191
 				19132
 				3312
+				8080
 			];
 			allowedUDPPorts = [
 				53317

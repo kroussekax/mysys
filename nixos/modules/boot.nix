@@ -13,6 +13,7 @@
 		kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore;
 		kernelParams = [
 			"mem_sleep_default=deep"
+			"iomem=relaxed"
 		];
 		kernel.sysctl = {
 			"user.max_user_namespaces" = 1048576;

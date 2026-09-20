@@ -18,7 +18,7 @@
 		})
 
 		(inputs.pixie-sddm.packages.${pkgs.stdenv.hostPlatform.system}.pixie-sddm.override {
-		 background = "${../wallpaper.png}";
+		 background = "${../../wallpaper.png}";
 		 avatar = ../../avatar.jpeg;       
 		 primaryColor = "#B3C8FF";      
 		 accentColor = "#3F5F91";      

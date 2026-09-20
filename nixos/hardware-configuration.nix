@@ -29,15 +29,21 @@
 		fsType = "ntfs";
 		options = [
 			"rw"
-			"uid=1000"
-			"gid=100"
-			"umask=022"
-			"windows_names"
-			"nofail"
+				"uid=1000"
+				"gid=100"
+				"umask=022"
+				"windows_names"
+				"nofail"
 		];
 	};
 
-	swapDevices = [ ];
+	swapDevices = [
+	{
+		device = "/dev/disk/by-uuid/ebd8a81f-35c1-48e1-9afd-394e6d528648";
+	}
+	];
+
+	boot.resumeDevice = "/dev/disk/by-uuid/ebd8a81f-35c1-48e1-9afd-394e6d528648";
 
 	nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 	hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
