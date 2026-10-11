@@ -1,4 +1,4 @@
-{ config, pkgs, ...}:
+{ pkgs, ...}:
 {
 	services = {
 		udev.extraRules = ''
@@ -11,12 +11,37 @@
 			yubikey-personalization
 		];
 
+		openssh = {
+			enable = true;
+			openFirewall = true;
+			settings = {
+				PasswordAuthentication = true;
+				KbdInteractiveAuthentication = false;
+				PermitRootLogin = "no";
+				AllowUsers = [ "kax" ];
+				MaxAuthTries = 3;
+				PerSourcePenalties = "crash:3600s authfail:3600s max:86400s";
+			};
+		};
+
+		udisks2.enable = true;
+		gvfs.enable = true;
+
+		tlp = {
+			enable = true;
+
+			settings = {
+				START_CHARGE_THRESH_BAT0 = 80;
+				STOP_CHARGE_THRESH_BAT0 = 90;
+			};
+		};
+
 		xserver.enable = true;
 
 		flatpak.enable = true;
 
 		displayManager.sddm = {
-			enable = true;
+			enable = false;
 			theme = "pixie";
 			wayland.enable = true;
 
@@ -27,6 +52,17 @@
 				pkgs.kdePackages.qtdeclarative
 				pkgs.kdePackages.qt5compat
 			];
+		};
+
+		greetd = {
+			enable = true;
+
+			settings = {
+				default_session = {
+					command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd start-hyprland";
+					user = "greeter";
+				};
+			};
 		};
 
 		xserver.xkb = {
@@ -41,7 +77,7 @@
 			pulse.enable = true;
 		};
 
-		auto-cpufreq.enable = true;
+		auto-cpufreq.enable = false;
 		auto-cpufreq.settings = {
 			battery = {
 				governor = "powersave";
@@ -61,7 +97,18 @@
 		gnome.gnome-keyring.enable = true;
 
 		tailscale.enable = true;
-		power-profiles-daemon.enable = false;
+		power-profiles-daemon.enable = true;
 		fwupd.enable = true;
+
+		desktopManager.gnome.enable = true;
+
+		gnome = {
+			core-apps.enable = false;
+			core-developer-tools.enable = false;
+			games.enable = false;
+		};
+
+		fprintd.enable = true;
+
 	};
 }

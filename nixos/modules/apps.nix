@@ -9,13 +9,8 @@
 		bibata-cursors
 
 		polkit_gnome
-
-		(catppuccin-sddm.override {
-		 flavor = "mocha";
-		 accent = "mauve";
-		 background = "${../../wallpaper.png}";
-		 loginBackground = true;
-		})
+		gnome-calendar
+		gnome-maps
 
 		(inputs.pixie-sddm.packages.${pkgs.stdenv.hostPlatform.system}.pixie-sddm.override {
 		 background = "${../../wallpaper.png}";
@@ -27,7 +22,7 @@
 		 textColor = "#E2E2E6";           
 		 fontFamily = "JetBrains Mono";  
 		 fontSize = 13;                 
-		})
+		 })
 
 		vulkan-tools
 

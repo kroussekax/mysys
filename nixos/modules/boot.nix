@@ -14,6 +14,7 @@
 		kernelParams = [
 			"mem_sleep_default=deep"
 			"iomem=relaxed"
+			"resume_offset=96931840"
 		];
 		kernel.sysctl = {
 			"user.max_user_namespaces" = 1048576;
