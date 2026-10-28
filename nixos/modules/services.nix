@@ -27,15 +27,6 @@
 		udisks2.enable = true;
 		gvfs.enable = true;
 
-		tlp = {
-			enable = true;
-
-			settings = {
-				START_CHARGE_THRESH_BAT0 = 80;
-				STOP_CHARGE_THRESH_BAT0 = 90;
-			};
-		};
-
 		xserver.enable = true;
 
 		flatpak.enable = true;
@@ -59,7 +50,7 @@
 
 			settings = {
 				default_session = {
-					command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd start-hyprland";
+					command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd niri-session";
 					user = "greeter";
 				};
 			};
@@ -107,8 +98,6 @@
 			core-developer-tools.enable = false;
 			games.enable = false;
 		};
-
-		fprintd.enable = true;
 
 	};
 }

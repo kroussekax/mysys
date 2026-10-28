@@ -24,7 +24,7 @@
 		options = [ "fmask=0077" "dmask=0077" ];
 	};
 
-	fileSystems."/home/kax/Windows" = {
+	fileSystems."/home/kax/windows" = {
 		device = "/dev/disk/by-uuid/8E18C57B18C56337";
 		fsType = "ntfs";
 		options = [
@@ -39,11 +39,12 @@
 
 	swapDevices = [
 	{
-		device = "/dev/disk/by-uuid/ebd8a81f-35c1-48e1-9afd-394e6d528648";
+		device = "/swapfile";
+		size = 16 * 1024;
 	}
 	];
 
-	boot.resumeDevice = "/dev/disk/by-uuid/ebd8a81f-35c1-48e1-9afd-394e6d528648";
+	boot.resumeDevice = "/dev/disk/by-uuid/e47503d3-7800-47c5-8339-da2008570299";
 
 	nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 	hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

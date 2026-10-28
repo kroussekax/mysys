@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ inputs, ... }:
 
 {
 	imports = [
@@ -18,13 +18,12 @@
 
 	xdg.portal.enable = true;
 
-	virtualisation.docker.enable = true;
-
 	programs = {
 		zsh.enable = true;
 		nix-ld.enable = true;
 	};
 
+	system.stateVersion = "25.11";
 
-		system.stateVersion = "25.11";
+	virtualisation.docker.enable = true;
 }

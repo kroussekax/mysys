@@ -6,7 +6,6 @@
 		./services.nix
 		./hardware.nix
 		./users.nix
-		./hyprland.nix
 		./niri.nix
 		./environment.nix
 		./apps.nix

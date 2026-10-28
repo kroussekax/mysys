@@ -1,29 +1,17 @@
-{ pkgs, inputs, ...}:
+{ pkgs, ...}:
 {
+	programs.appimage = {
+		enable = true;
+		binfmt = true;
+	};
+
 	environment.systemPackages = with pkgs; [
 		home-manager
 		efibootmgr
 
-		inputs.iio-hyprland.packages.${pkgs.system}.default
-
 		bibata-cursors
 
 		polkit_gnome
-		gnome-calendar
-		gnome-maps
-
-		(inputs.pixie-sddm.packages.${pkgs.stdenv.hostPlatform.system}.pixie-sddm.override {
-		 background = "${../../wallpaper.png}";
-		 avatar = ../../avatar.jpeg;       
-		 primaryColor = "#B3C8FF";      
-		 accentColor = "#3F5F91";      
-		 autoColor = true;            
-		 backgroundColor = "#1A1C1E";      
-		 textColor = "#E2E2E6";           
-		 fontFamily = "JetBrains Mono";  
-		 fontSize = 13;                 
-		 })
-
 		vulkan-tools
 
 		os-prober
@@ -35,5 +23,5 @@
 		papirus-icon-theme
 		kdePackages.qt5compat
 		nerd-fonts.jetbrains-mono
-		];
+	];
 }

@@ -1,9 +1,16 @@
-{ config, ...}:
+{ ... }:
 {
 	security = {
-		pam.services.login.enableGnomeKeyring = true;
-		pam.services.gdm.enableGnomeKeyring = true;
-		pam.u2f.enable = true;
+		pam = {
+			u2f.enable = true;
+			services = {
+				login.enableGnomeKeyring = true;
+				gdm.enableGnomeKeyring = true;
+				sudo.fprintAuth = true;
+				login.fprintAuth = true;
+			};
+
+		};
 		rtkit.enable = true;
 
 		polkit.enable = true;

@@ -5,9 +5,9 @@
 		nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 		nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
-		iio-hyprland.url = "github:JeanSchoeller/iio-hyprland";
-		hyprland.url = "github:hyprwm/Hyprland";
-		pixie-sddm.url = "github:xCaptaiN09/pixie-sddm";
+		#iio-hyprland.url = "github:JeanSchoeller/iio-hyprland";
+		#hyprland.url = "github:hyprwm/Hyprland";
+		#pixie-sddm.url = "github:xCaptaiN09/pixie-sddm";
 	};
 
 	outputs = { self, nixpkgs, ... } @ inputs:
