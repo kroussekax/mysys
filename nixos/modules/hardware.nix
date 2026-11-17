@@ -6,6 +6,7 @@
 			enable32Bit = true;
 
 			extraPackages = with pkgs; [
+				vulkan-loader
 				mesa
 			];
 			extraPackages32 = with pkgs.pkgsi686Linux; [
